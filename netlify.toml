@@ -1,0 +1,8 @@
+# The site entrypoint and all public assets live in dist/.
+[build]
+  base = "."
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

@@ -35,6 +35,12 @@ npm run build
 
 Three.js 0.186.0 et esbuild 0.25.12 sont verrouillés dans `package-lock.json`. Le bundle est autonome. Aucun `node_modules` ne doit être publié.
 
+## Déploiement sur Netlify
+
+Le fichier `netlify.toml` à la racine configure la compilation (`npm run build`), Node.js 22 et le dossier publié (`dist`). Connecter Netlify à ce dépôt et à la branche `main` ; les réglages versionnés prennent priorité sur les valeurs correspondantes de l’interface Netlify.
+
+Si l’accueil renvoie une 404 alors que `/dist/` affiche le site, la racine du dépôt a été publiée au lieu de `dist`. Relancer le déploiement après récupération de cette configuration. Pour un déploiement manuel par glisser-déposer, déposer le dossier `dist` lui-même : le fichier `index.html` doit être directement à la racine de l’artefact publié.
+
 ## Contenu et état du projet
 
 Références : `PoudlardRP-Minecraft/HogwartsRP`, `README.md` et `docs/PROJECT-CONTEXT.md`, consultés le 9 septembre 2026, révision `3f4ea74432850f855f61d99f4c59c47f31c7d1c5`.
