@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <title>Bombarda — Arcanum spell glyph</title>
+  <defs>
+    <linearGradient id="ivory" x1="26" y1="12" x2="94" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF4D9"/><stop offset=".55" stop-color="#EDE5D1"/><stop offset="1" stop-color="#C8A56A"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="32" y1="18" x2="98" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E4C68F"/><stop offset="1" stop-color="#9B7750"/>
+    </linearGradient>
+  </defs>
+  <!-- A twisting flame cut through a compact, readable silhouette. -->
+  <path fill="url(#ivory)" fill-rule="evenodd" d="M64 13 C69 32 54 40 58 52 C62 47 69 43 73 35 C80 46 86 53 87 66 C92 61 94 55 94 51 C108 74 99 98 80 108 C66 116 45 110 35 97 C22 79 30 61 41 49 C39 65 43 69 48 73 C49 61 40 54 45 41 C49 29 57 22 64 13 Z M64 63 C65 75 52 80 51 90 C50 99 57 105 65 105 C77 105 84 92 78 81 C74 89 72 89 69 90 C73 79 69 70 64 63 Z"/>
+  <path d="M38 28 L44 34 M87 20 L84 29 M104 39 L99 43" fill="none" stroke="url(#gold)" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M61 112 Q77 116 91 106" fill="none" stroke="url(#gold)" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

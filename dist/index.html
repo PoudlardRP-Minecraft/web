@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b141b">
+  <meta name="description" content="Arcanum, un projet de serveur Minecraft Java RP inspiré de Harry Potter. Découvrez sa magie, son grimoire et la progression de votre futur sorcier.">
+  <title>Arcanum — Votre histoire commence par un sort</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <script type="module" src="effects.bundle.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="site-header">
+    <a class="brand" href="#accueil" aria-label="Arcanum, accueil"><span class="brand-mark" aria-hidden="true">A</span><span>ARCANUM<small>MINECRAFT ROLEPLAY</small></span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation">Menu <span aria-hidden="true">☰</span></button>
+    <nav id="navigation" aria-label="Navigation principale"><a href="#univers">L’univers</a><a href="#magie">La magie</a><a href="#aventure">Votre aventure</a><a class="nav-cta" href="#projet">Le projet <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="contenu">
+    <section class="hero" id="accueil" aria-labelledby="hero-title">
+      <img class="hero-image" src="assets/castle.webp" alt="" width="1672" height="941" fetchpriority="high">
+      <div class="hero-shade"></div>
+      <canvas id="hero-magic" aria-hidden="true"></canvas>
+      <div class="hero-content">
+        <p class="eyebrow"><span class="line"></span> UN NOUVEAU CHAPITRE DU ROLEPLAY</p>
+        <h1 id="hero-title">Votre histoire<br>commence par<br><em>un sort.</em></h1>
+        <p class="hero-description">Au-delà des blocs, un monde de sorcellerie.<br>Entrez dans Arcanum, un projet de serveur Minecraft RP inspiré de l’univers de Harry Potter.</p>
+        <div class="hero-actions"><a class="button button-gold" href="#univers">Découvrir l’univers <span aria-hidden="true">↗</span></a><a class="text-link" href="#projet">Un projet en devenir <span aria-hidden="true">→</span></a></div>
+        <div class="hero-meta"><span>MINECRAFT JAVA</span><span>1.20.1 · FABRIC</span><span>PROTOTYPE EN DÉVELOPPEMENT</span></div>
+      </div>
+      <div class="hero-bottom"><a href="#univers"><span class="scroll-icon" aria-hidden="true">↓</span> LE VOYAGE COMMENCE ICI</a><button id="motion-toggle" type="button" aria-pressed="false" hidden>Effets animés : activés</button><span>Illustration d’ambiance · pas une capture du serveur</span></div>
+    </section>
+
+    <section class="intro section-shell" id="univers" aria-labelledby="univers-title">
+      <div><p class="eyebrow">01 / L’UNIVERS</p><h2 id="univers-title">Vous connaissez la magie.<br><em>Vivez votre propre histoire.</em></h2></div>
+      <div class="intro-copy"><p>Une baguette. Un personnage. Tout un parcours à écrire. Arcanum pose les premières pierres d’une expérience de sorcellerie où le roleplay prend vie dans Minecraft.</p><p>Notre ambition : faire de chaque rencontre, de chaque cours et de chaque sort un chapitre de votre aventure. La magie et la progression existent déjà dans le prototype ; la vie de l’école reste à construire.</p></div>
+      <div class="pillars"><div><span class="pillar-number">I.</span><h3>Incarner</h3><p>Donner vie à un sorcier et faire évoluer ses caractéristiques.</p></div><div><span class="pillar-number">II.</span><h3>Maîtriser</h3><p>Composer son grimoire et apprendre à utiliser sa magie.</p></div><div><span class="pillar-number">III.</span><h3>Partager</h3><p>Bâtir, à terme, une histoire commune au fil du roleplay.</p></div></div>
+    </section>
+
+    <section class="magic section-shell" id="magie" aria-labelledby="magie-title">
+      <div class="section-heading"><div><p class="eyebrow">02 / L’ART DES SORTILÈGES</p><h2 id="magie-title">La magie, <em>au bout des doigts.</em></h2></div><p>Quatre sorts jouables dans le prototype.<br>Quatre emplacements dans votre grimoire.</p></div>
+      <div class="magic-experience" id="magic-experience">
+        <div class="experience-copy"><p class="eyebrow">PRENEZ LA BAGUETTE</p><h3 id="active-spell">Lumos</h3><p id="spell-caption">Faites naître la lumière.</p><button class="button button-gold" id="cast-spell" type="button" hidden>Lancer le sort <span aria-hidden="true">✦</span></button><p class="experience-hint" id="experience-hint">Sélectionnez une carte ci-dessous pour découvrir un sort.</p><p class="sr-only" id="spell-announcement" aria-live="polite"></p></div>
+        <div class="wand-viewport" id="wand-viewport"><canvas id="wand-scene" aria-hidden="true"></canvas><div class="wand-fallback"><img src="assets/lumos.svg" width="130" height="130" alt="Symbole du sort Lumos"><p>La magie commence par une intention.</p></div><span class="wand-label">BAGUETTE ARCANUM · APERÇU ARTISTIQUE</span></div>
+      </div>
+      <div class="spell-grid">
+        <details class="spell-card lumos"><summary><span class="spell-top">I <span>LUMIÈRE</span></span><img src="assets/lumos.svg" width="84" height="84" alt=""><h3>Lumos</h3><p>Une lueur dans l’obscurité.<br>Éclairez le chemin avec votre baguette.</p><span class="spell-more">Découvrir le sort <span aria-hidden="true">+</span></span></summary><div class="spell-detail">Une lumière vous accompagne tant que vous tenez votre baguette. Lancez à nouveau le sort pour l’éteindre.<dl><div><dt>Mana à l’activation</dt><dd>3</dd></div><div><dt>Extinction</dt><dd>Gratuite</dd></div></dl></div></details>
+        <details class="spell-card protego"><summary><span class="spell-top">II <span>PROTECTION</span></span><img src="assets/protego.svg" width="84" height="84" alt=""><h3>Protego</h3><p>La meilleure riposte ?<br>Un bouclier qui fait la différence.</p><span class="spell-more">Découvrir le sort <span aria-hidden="true">+</span></span></summary><div class="spell-detail">Une sphère magique intercepte les projectiles et vous protège des dégâts ordinaires pendant six secondes.<dl><div><dt>Mana</dt><dd>25</dd></div><div><dt>Recharge</dt><dd>10 s</dd></div></dl></div></details>
+        <details class="spell-card leviosa"><summary><span class="spell-top">III <span>LÉVITATION</span></span><img src="assets/leviosa.svg" width="84" height="84" alt=""><h3>Wingardium Leviosa</h3><p>Défiez la gravité.<br>Soulevez la créature ou le joueur visé.</p><span class="spell-more">Découvrir le sort <span aria-hidden="true">+</span></span></summary><div class="spell-detail">Maintenez votre cible dans les airs pendant six secondes, jusqu’à seize blocs et en ligne de vue.<dl><div><dt>Mana</dt><dd>20</dd></div><div><dt>Recharge</dt><dd>8 s</dd></div></dl></div></details>
+        <details class="spell-card bombarda"><summary><span class="spell-top">IV <span>DÉFLAGRATION</span></span><img src="assets/bombarda.svg" width="84" height="84" alt=""><h3>Bombarda</h3><p>Une étincelle. Une déflagration.<br>Libérez la puissance de votre baguette.</p><span class="spell-more">Découvrir le sort <span aria-hidden="true">+</span></span></summary><div class="spell-detail">Un projectile de feu explose à l’impact. Les constructions sont préservées par défaut.<dl><div><dt>Mana</dt><dd>18</dd></div><div><dt>Recharge</dt><dd>1,2 s</dd></div></dl></div></details>
+      </div>
+      <p class="section-note">Valeurs actuelles du prototype, susceptibles d’évoluer avec l’équilibrage.</p>
+    </section>
+
+    <section class="adventure section-shell" id="aventure" aria-labelledby="aventure-title">
+      <div class="adventure-copy"><p class="eyebrow">03 / VOTRE AVENTURE</p><h2 id="aventure-title">Un sorcier.<br><em>Mille possibilités.</em></h2><p>De la première à la septième année, façonnez votre personnage à travers une progression scolaire distincte de l’expérience Minecraft.</p><p>Vitalité, réserve magique, résilience ou puissance arcanique : répartissez vos points selon votre façon de jouer.</p><div class="progression-facts"><div><strong>7</strong><span>années de progression</span></div><div><strong>4</strong><span>caractéristiques à développer</span></div></div></div>
+      <div class="character-panel"><div class="panel-top"><span>LE CARNET DU SORCIER</span><span aria-hidden="true">✦</span></div><h3>Une aventure qui<br>vous ressemble.</h3><ul><li><span>01</span><div><h4>Votre grimoire</h4><p>Organisez vos quatre emplacements de sorts sur votre baguette.</p></div></li><li><span>02</span><div><h4>Votre progression</h4><p>Trois points au départ, puis trois à chaque nouvelle année.</p></div></li><li><span>03</span><div><h4>Votre tenue</h4><p>Braise, Marée, Sylve ou Ambre : quatre ensembles cosmétiques pour votre sorcier.</p><div class="swatches" aria-label="Couleurs des tenues"><span class="ember" title="Braise"></span><span class="tide" title="Marée"></span><span class="verdant" title="Sylve"></span><span class="ochre" title="Ambre"></span></div></div></li></ul><div class="panel-footer">Votre profil et votre progression sont sauvegardés.</div></div>
+    </section>
+
+    <section class="project section-shell" id="projet" aria-labelledby="projet-title"><p class="eyebrow">04 / LES PROCHAINS CHAPITRES</p><div class="section-heading"><h2 id="projet-title">La première page<br><em>est déjà écrite.</em></h2><p>Arcanum est en développement.<br>Voici où nous en sommes.</p></div><div class="roadmap"><article><span class="status">DANS LE PROTOTYPE</span><h3>Les fondations magiques</h3><p>Quatre sorts, un grimoire, une fiche de personnage, la progression scolaire et les tenues de sorcier.</p></article><article><span class="status status-next">PROCHAINE ÉTAPE</span><h3>Faire vivre le roleplay</h3><p>Identité RP, cours, apprentissage progressif des sorts, interactions sociales et vocal de proximité font partie de l’horizon serveur.</p></article><article><span class="status status-future">OUVERTURE À ANNONCER</span><h3>Se retrouver en jeu</h3><p>La date d’ouverture et les modalités pour rejoindre le serveur ne sont pas encore annoncées. Elles seront précisées ici.</p></article></div></section>
+  </main>
+  <footer class="site-footer"><div class="footer-top"><a class="brand" href="#accueil"><span class="brand-mark" aria-hidden="true">A</span><span>ARCANUM<small>UNE HISTOIRE À ÉCRIRE ENSEMBLE.</small></span></a><a class="text-link" href="#accueil">Retour en haut <span aria-hidden="true">↑</span></a></div><div class="footer-bottom"><p>Arcanum · Projet PoudlardRP-Minecraft</p><p>Projet de fans indépendant, non affilié à Mojang, Microsoft ou aux ayants droit de Harry Potter.</p></div></footer>
+</body>
+</html>

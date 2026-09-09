@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <title>Leviosa — Arcanum spell glyph</title>
+  <defs>
+    <linearGradient id="ivory" x1="26" y1="12" x2="94" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF4D9"/><stop offset=".55" stop-color="#EDE5D1"/><stop offset="1" stop-color="#C8A56A"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="32" y1="18" x2="98" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E4C68F"/><stop offset="1" stop-color="#9B7750"/>
+    </linearGradient>
+  </defs>
+  <!-- A lifted feather, cut barbs and a continuous rising current. -->
+  <path d="M101 15 C84 15 63 25 50 42 C38 58 39 75 43 86 C55 84 70 75 82 62 C95 47 101 29 101 15 Z" fill="none" stroke="url(#ivory)" stroke-width="4.3" stroke-linejoin="round"/>
+  <path d="M39 99 C55 72 74 51 94 25" fill="none" stroke="url(#ivory)" stroke-width="4.2" stroke-linecap="round"/>
+  <path d="M48 79 L48 62 M58 66 L56 47 M68 54 L68 34 M53 75 L68 74 M65 60 L80 59 M77 45 L92 42" fill="none" stroke="url(#gold)" stroke-width="2.8" stroke-linecap="round"/>
+  <path d="M27 93 C10 102 20 117 40 113 C53 111 56 99 71 97 C84 95 98 98 109 88" fill="none" stroke="url(#gold)" stroke-width="3.4" stroke-linecap="round"/>
+  <path d="M18 76 C21 67 25 62 32 58 M109 48 L113 41 M101 73 L111 67" fill="none" stroke="url(#gold)" stroke-width="2.4" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <title>Protego — Arcanum spell glyph</title>
+  <defs>
+    <linearGradient id="ivory" x1="26" y1="12" x2="94" y2="116" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF4D9"/><stop offset=".55" stop-color="#EDE5D1"/><stop offset="1" stop-color="#C8A56A"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="32" y1="18" x2="98" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E4C68F"/><stop offset="1" stop-color="#9B7750"/>
+    </linearGradient>
+  </defs>
+  <!-- An enclosing shield with a bright ward at its centre. -->
+  <path d="M64 15 C75 25 90 30 103 31 L100 63 C98 85 84 104 64 115 C44 104 30 85 28 63 L25 31 C38 30 53 25 64 15 Z" fill="none" stroke="url(#ivory)" stroke-width="4.8" stroke-linejoin="round"/>
+  <path d="M64 27 C74 34 85 38 92 39 L90 64 C88 80 78 94 64 103 C50 94 40 80 38 64 L36 39 C44 38 54 34 64 27 Z" fill="none" stroke="url(#gold)" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M64 40 C68 56 71 60 84 65 C71 68 68 74 64 89 C60 74 57 69 44 65 C57 61 60 56 64 40 Z" fill="url(#ivory)"/>
+  <path d="M15 51 Q10 67 20 83 M113 51 Q118 67 108 83" fill="none" stroke="url(#gold)" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
