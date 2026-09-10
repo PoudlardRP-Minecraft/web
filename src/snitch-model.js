@@ -71,20 +71,49 @@ export function createSnitch() {
   };
 }
 
-export function snitchRoute(progress, time, index = 0, aspect = 1.7) {
-  // Rest along the margins, crossing between sections as the visitor scrolls.
-  const p = THREE.MathUtils.clamp(progress, 0, 1);
-  const route = index === 0
-    ? [[0.84, 0.39], [0.13, 0.56], [0.88, 0.35], [0.12, 0.70], [0.86, 0.55]]
-    : [[0.13, 0.73], [0.87, 0.23], [0.12, 0.72], [0.88, 0.34], [0.16, 0.30]];
-  const segment = Math.min(3, Math.floor(p * 4));
-  let blend = p * 4 - segment;
-  blend = blend * blend * (3 - 2 * blend);
-  const phase = time * 0.58 + index * 2.9;
-  let x = THREE.MathUtils.lerp(route[segment][0], route[segment + 1][0], blend);
-  let y = THREE.MathUtils.lerp(route[segment][1], route[segment + 1][1], blend);
-  x += Math.sin(phase) * 0.034 + Math.sin(phase * 2.3) * 0.009;
-  y += Math.sin(phase * 1.31) * 0.047;
-  x = THREE.MathUtils.clamp(x, 0.12, 0.88);
-  return new THREE.Vector3((x - 0.5) * 10 * aspect, (0.5 - y) * 10, Math.sin(phase) * 0.3);
+// Autonomous, time-driven flight. Normalized coordinates keep the same safe
+// screen margins on resize; no document position or pointer enters this model.
+export function createSnitchFlight({ random = Math.random } = {}) {
+  const point = () => new THREE.Vector3(0.07 + random() * 0.86, 0.12 + random() * 0.76, (random() - 0.5) * 0.6);
+  const control = anchor => new THREE.Vector3(
+    THREE.MathUtils.clamp(anchor.x + (random() - 0.5) * 0.42, 0.07, 0.93),
+    THREE.MathUtils.clamp(anchor.y + (random() - 0.5) * 0.36, 0.12, 0.88),
+    (random() - 0.5) * 0.6,
+  );
+  let from = point();
+  let to, firstControl, secondControl, duration;
+  let elapsed = 0;
+
+  function nextLeg() {
+    to = point();
+    // Avoid repeatedly hovering on almost identical destinations.
+    for (let attempt = 0; attempt < 5 && from.distanceTo(to) < 0.22; attempt++) to = point();
+    firstControl = control(from);
+    secondControl = control(to);
+    duration = 2.4 + from.distanceTo(to) * 2.8 + random() * 1.4;
+  }
+
+  nextLeg();
+  return {
+    advance(delta, aspect, target = new THREE.Vector3()) {
+      if (Number.isFinite(delta) && delta > 0) elapsed += delta;
+      while (elapsed >= duration) {
+        elapsed -= duration;
+        from = to;
+        nextLeg();
+      }
+      const t = elapsed / duration;
+      // Zero velocity and acceleration at each join: quick flights taper into
+      // brief hovering moments without sudden turns or position jumps.
+      const u = t * t * t * (t * (t * 6 - 15) + 10);
+      const v = 1 - u;
+      target.copy(from).multiplyScalar(v * v * v)
+        .addScaledVector(firstControl, 3 * v * v * u)
+        .addScaledVector(secondControl, 3 * v * u * u)
+        .addScaledVector(to, u * u * u);
+      target.x = (target.x - 0.5) * 10 * aspect;
+      target.y = (0.5 - target.y) * 10;
+      return target;
+    },
+  };
 }

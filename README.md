@@ -47,7 +47,7 @@ La première arrivée sans ancre ouvre un mur de briques 3D pendant environ cinq
 
 L’entrée est mémorisée uniquement dans `sessionStorage` pour ne pas se répéter à chaque rechargement du même onglet. « Rejouer l’entrée » la relance. Les liens directs vers une section évitent l’introduction. Un contrôleur indépendant ferme l’entrée si le bundle ou une texture ne charge pas. Aucune préférence de mouvement réduit n’est contournée.
 
-Deux Vifs d’or métalliques accompagnent le défilement sur ordinateur, un seul sur petit écran. Les ailes sont articulées ; les trajectoires restent principalement dans les marges, avec une traînée légère. Le canevas laisse passer tous les clics. La scène d’entrée et le vol partagent le même contexte WebGL ; la géométrie du mur est libérée à la fermeture. Les rendus sont suspendus lorsque l’onglet est masqué et le bouton « Effets animés » les arrête.
+Deux petits Vifs d’or métalliques volent librement sur ordinateur (environ 58 et 42 pixels d’envergure), un seul sur petit écran (38 pixels). Chaque Vif choisit ses propres destinations et courbes aléatoires, avec des accélérations et ralentissements progressifs. Le vol dépend uniquement du temps, sans lien avec le défilement ou le pointeur. Les ailes sont articulées et la traînée reste légère. Le canevas laisse passer tous les clics. La scène d’entrée et le vol partagent le même contexte WebGL ; la géométrie du mur est libérée à la fermeture. Les rendus sont suspendus lorsque l’onglet est masqué et le bouton « Effets animés » les arrête.
 
 Les comportements s’inspirent de https://heritagedepoudlard.fr/, avec une implémentation Three.js originale. Aucun code, modèle ou visuel de ce site ni des films n’a été repris.
 

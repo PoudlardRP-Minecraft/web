@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { createWall } from './wall-model.js';
-import { createSnitch, snitchRoute } from './snitch-model.js';
+import { createSnitch, createSnitchFlight } from './snitch-model.js';
 
 const emit = (name, detail) => window.dispatchEvent(new CustomEvent(`arcanum:${name}`, { detail }));
 
@@ -18,16 +18,10 @@ export function createCinematicEffects({ enabled: initiallyEnabled }) {
   let renderer, scene, wallCamera, flightCamera, environmentTarget, wall, texture;
   let ready = false, starting = false, disposed = false, textureFailed = false;
   let intro = false, introTime = -0.8, openingAnnounced = false;
-  let frame = 0, previous = 0, time = 0, scrollTarget = 0, scrollSmooth = 0;
+  let frame = 0, previous = 0, time = 0;
   const flights = [];
-  let resizeObserver;
   const origin = new THREE.Vector3();
   const drift = new THREE.Vector3();
-
-  function updateScroll() {
-    const range = document.documentElement.scrollHeight - innerHeight;
-    scrollTarget = range > 0 ? THREE.MathUtils.clamp(scrollY / range, 0, 1) : 0;
-  }
 
   function resize() {
     if (!renderer || disposed) return;
@@ -46,11 +40,16 @@ export function createCinematicEffects({ enabled: initiallyEnabled }) {
       wall = createWall(aspect, texture);
       scene.add(wall.group);
     }
-    updateScroll();
+    flights.forEach((f, index) => {
+      // Fixed CSS-pixel wingspan, including on tall displays and small phones.
+      const wingspan = compact ? 38 : (index ? 42 : 58);
+      f.snitch.group.scale.setScalar(wingspan * 10 / (height * 2.2));
+      f.seeded = false;
+    });
   }
 
   function createTrail() {
-    const count = compact ? 28 : 48;
+    const count = compact ? 18 : 26;
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
     const gold = new THREE.Color(0xe8b864);
@@ -63,7 +62,7 @@ export function createCinematicEffects({ enabled: initiallyEnabled }) {
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3).setUsage(THREE.DynamicDrawUsage));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-    const trail = new THREE.Line(geometry, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.58, blending: THREE.AdditiveBlending, depthWrite: false }));
+    const trail = new THREE.Line(geometry, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.32, blending: THREE.AdditiveBlending, depthWrite: false }));
     trail.frustumCulled = false;
     return { trail, count, positions, seeded: false, sampleTime: 0 };
   }
@@ -90,7 +89,6 @@ export function createCinematicEffects({ enabled: initiallyEnabled }) {
     layer.append(canvas);
     layer.hidden = !enabled;
     flights.forEach(f => { f.snitch.group.visible = true; f.trail.visible = true; f.seeded = false; });
-    updateScroll(); scrollSmooth = scrollTarget;
     emit('entrance-state', { active: false });
     wake();
   }
@@ -124,15 +122,12 @@ export function createCinematicEffects({ enabled: initiallyEnabled }) {
       flightCamera.position.z = 10;
       for (let i = 0; i < (compact ? 1 : 2); i++) {
         const snitch = createSnitch();
-        snitch.group.scale.setScalar(compact ? 0.48 : (i ? 0.62 : 1));
         scene.add(snitch.group);
         const trail = createTrail();
         scene.add(trail.trail);
-        flights.push({ snitch, ...trail, previous: new THREE.Vector3() });
+        flights.push({ snitch, ...trail, flight: createSnitchFlight(), previous: new THREE.Vector3() });
       }
       resize();
-      resizeObserver = new ResizeObserver(updateScroll);
-      resizeObserver.observe(document.body);
       ready = true;
       replay.hidden = false;
       replay.disabled = !enabled;
@@ -157,14 +152,12 @@ export function createCinematicEffects({ enabled: initiallyEnabled }) {
   }
 
   function updateFlights(delta) {
-    scrollSmooth += (scrollTarget - scrollSmooth) * (1 - Math.exp(-delta * 3.8));
     flights.forEach((f, index) => {
-      origin.copy(snitchRoute(scrollSmooth, time, index, innerWidth / innerHeight));
-      origin.x += pointer.x * (compact ? 0 : 0.11);
-      origin.y += pointer.y * (compact ? 0 : 0.08);
-      drift.copy(origin).sub(f.previous);
+      f.flight.advance(delta, innerWidth / innerHeight, origin);
+      if (!f.seeded) f.previous.copy(origin);
+      drift.copy(origin).sub(f.previous).divideScalar(delta || 1);
       f.snitch.group.position.copy(origin);
-      f.snitch.group.rotation.set(0.16 + Math.sin(time * 0.67 + index) * 0.14, Math.sin(time * 0.46 + index) * 0.48, THREE.MathUtils.clamp(-drift.x * 7, -0.55, 0.55) + Math.sin(time * 0.8) * 0.1);
+      f.snitch.group.rotation.set(0.16 + Math.sin(time * 0.67 + index) * 0.14, Math.sin(time * 0.46 + index) * 0.48, THREE.MathUtils.clamp(-drift.x * 0.09, -0.55, 0.55) + Math.sin(time * 0.8) * 0.1);
       f.snitch.flap(time + index * 0.5);
       f.previous.copy(origin);
       if (!f.seeded) {
@@ -222,14 +215,12 @@ export function createCinematicEffects({ enabled: initiallyEnabled }) {
     cancelAnimationFrame(frame); frame = 0;
     layer.hidden = true;
     replay.hidden = true;
-    resizeObserver?.disconnect();
     wall?.dispose(); texture?.dispose();
     flights.forEach(f => { f.snitch.dispose(); f.trail.geometry.dispose(); f.trail.material.dispose(); });
     environmentTarget?.dispose(); renderer?.dispose();
   }
 
   window.addEventListener('resize', resize, { passive: true });
-  window.addEventListener('scroll', updateScroll, { passive: true });
   if (!compact) window.addEventListener('pointermove', event => pointer.set(event.clientX / innerWidth * 2 - 1, 1 - event.clientY / innerHeight * 2), { passive: true });
   window.addEventListener('arcanum:entrance-request', () => {
     if (disposed || textureFailed || !enabled || motionQuery.matches) { emit('entrance-unavailable'); return; }
@@ -242,7 +233,6 @@ export function createCinematicEffects({ enabled: initiallyEnabled }) {
     else { flights.forEach(f => { f.seeded = false; }); wake(); }
   });
   canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); emit('entrance-unavailable'); dispose(); });
-  updateScroll(); scrollSmooth = scrollTarget;
   initialize();
   return { setEnabled, dispose };
 }
