@@ -6,7 +6,8 @@
   "description": "Site immersif du projet Minecraft RP Arcanum",
   "scripts": {
     "build": "esbuild src/effects.js --bundle --minify --format=esm --legal-comments=eof --outfile=dist/effects.bundle.js",
-    "check": "node --check src/effects.js && node --check src/wand-model.js && node --check dist/script.js"
+    "check": "node --check src/effects.js && node --check src/cinematic.js && node --check src/wall-model.js && node --check src/snitch-model.js && node --check src/wand-model.js && node --check dist/entrance.js && node --check dist/script.js",
+    "test": "node --test tests/*.test.js"
   },
   "devDependencies": {
     "three": "0.186.0",

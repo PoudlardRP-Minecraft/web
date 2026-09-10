@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { buildWand } from './wand-model.js';
+import { createCinematicEffects } from './cinematic.js';
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const compact = matchMedia('(max-width: 720px)').matches;
@@ -32,6 +33,12 @@ const pointer = new THREE.Vector2();
 const smoothedPointer = new THREE.Vector2();
 const tipPosition = new THREE.Vector3();
 const resources = [];
+const cinematic = createCinematicEffects({ enabled });
+let entranceActive = !!document.querySelector('#wall-intro')?.open;
+window.addEventListener('arcanum:entrance-state', event => {
+  entranceActive = event.detail.active;
+  if (!entranceActive) wake();
+});
 
 function makeView(canvas, container, z) {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: !compact, powerPreference: 'low-power' });
@@ -246,7 +253,7 @@ function updateWand(delta) {
 
 function animate(now) {
   frame = 0;
-  if (!enabled || !initialized || document.hidden || (!heroVisible && !stageVisible)) { previousTime = 0; return; }
+  if (!enabled || !initialized || document.hidden || entranceActive || (!heroVisible && !stageVisible)) { previousTime = 0; return; }
   const delta = previousTime ? Math.min((now - previousTime) / 1000, 0.05) : 0;
   previousTime = now;
   elapsed += delta;
@@ -257,10 +264,11 @@ function animate(now) {
 }
 
 function wake() {
-  if (!frame && enabled && initialized && !document.hidden && (heroVisible || stageVisible)) frame = requestAnimationFrame(animate);
+  if (!frame && enabled && initialized && !document.hidden && !entranceActive && (heroVisible || stageVisible)) frame = requestAnimationFrame(animate);
 }
 
 function updateMotion() {
+  cinematic.setEnabled(enabled && !failed);
   const active = enabled && initialized && !failed;
   document.body.classList.toggle('effects-active', active);
   toggle.textContent = `Effets animés : ${enabled ? 'activés' : 'désactivés'}`;

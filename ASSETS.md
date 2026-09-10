@@ -8,3 +8,10 @@
 - Polices système : Georgia et Arial, aucun téléchargement externe.
 
 Les ressources du jeu sont réutilisées dans le site de la même organisation à la demande du propriétaire. Aucune licence générale de redistribution des ressources du jeu n’est ajoutée.
+
+## Mur de briques et Vifs d’or
+
+- `dist/assets/brick-clay.webp` : matériau de terre cuite généré avec ImageGen pour cette tâche, issu d’une image 1254 × 1254 et compressé en WebP. Éclairage du matériau neutre ; relief simulé à partir de cette texture dans le matériau 3D. Ce n’est pas un matériau scanné provenant d’un décor de film.
+- Brief de génération : « Seamless photorealistic PBR base-color texture of weathered reddish-brown fired clay brick material in extreme close-up; dark warm oxblood, umber and muted terracotta, fine natural grain, pores, small chips and subtle cracks, flat neutral lighting, no brick layout, no mortar, no borders, no directional shadows, no text, not stylized. »
+- `src/wall-model.js` et `src/snitch-model.js` : géométries et animations originales créées pour le site. Les ailes et les gravures des Vifs d’or sont modélisées en 3D. L’environnement de réflexion et les boîtes arrondies utilisent les modules fournis avec Three.js sous licence MIT.
+- Référence d’interaction : https://heritagedepoudlard.fr/ (consultée le 10 septembre 2026), pour le principe d’un passage de briques à l’arrivée et de Vifs d’or sur la page. Aucun fichier de cette référence n’est distribué dans ce dépôt.
