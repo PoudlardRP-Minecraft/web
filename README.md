@@ -20,9 +20,8 @@ Ouvrir http://localhost:8080. Utiliser un serveur HTTP : les modules JavaScript 
 - `src/effects.js` : scènes Three.js, particules, effets des quatre sorts, interactions et cycle de rendu.
 - `src/wand-model.js` : import du modèle Blockbench, pivots, texture et UV.
 - `dist/entrance.js` : accès indépendant au bouton Passer, à Échap et au délai de secours.
-- `src/cinematic.js` : ouverture du passage, vol des Vifs d’or, caméra et cycle de rendu.
+- `src/cinematic.js` : ouverture du passage, caméra et cycle de rendu.
 - `src/wall-model.js` : briques 3D instanciées, joints, texture et mouvement du passage.
-- `src/snitch-model.js` : corps métallique, gravures, ailes articulées et trajectoires.
 - `tests/` : tests du passage et de la géométrie avec le module de test natif de Node.js.
 - `dist/effects.bundle.js` : bundle généré et versionné pour un déploiement immédiat.
 - `dist/assets/` : illustration et icônes locales.
@@ -41,13 +40,13 @@ npm run build
 
 Three.js 0.186.0 et esbuild 0.25.12 sont verrouillés dans `package-lock.json`. Le bundle est autonome. Aucun `node_modules` ne doit être publié.
 
-## Entrée du passage et Vifs d’or
+## Entrée du passage
 
 La première arrivée sans ancre ouvre un mur de briques 3D pendant environ cinq secondes. Les briques arrondies, avec texture de terre cuite, relief et joints en retrait, pivotent puis se retirent de proche en proche. Le passage révèle directement la page située derrière. Le bouton « Ouvrir le passage » accélère le départ ; « Passer l’introduction » et Échap donnent immédiatement accès au site.
 
 L’entrée est mémorisée uniquement dans `sessionStorage` pour ne pas se répéter à chaque rechargement du même onglet. « Rejouer l’entrée » la relance. Les liens directs vers une section évitent l’introduction. Un contrôleur indépendant ferme l’entrée si le bundle ou une texture ne charge pas. Aucune préférence de mouvement réduit n’est contournée.
 
-Deux petits Vifs d’or métalliques volent librement sur ordinateur (environ 58 et 42 pixels d’envergure), un seul sur petit écran (38 pixels). Chaque Vif choisit ses propres destinations et courbes aléatoires, avec des accélérations et ralentissements progressifs. Le vol dépend uniquement du temps, sans lien avec le défilement ou le pointeur. Les ailes sont articulées et la traînée reste légère. Le canevas laisse passer tous les clics. La scène d’entrée et le vol partagent le même contexte WebGL ; la géométrie du mur est libérée à la fermeture. Les rendus sont suspendus lorsque l’onglet est masqué et le bouton « Effets animés » les arrête.
+Le canevas 3D reste dans la fenêtre d’introduction. La géométrie du mur est libérée et son rendu s’arrête à la fermeture. Le rendu est suspendu lorsque l’onglet est masqué et le bouton « Effets animés » permet aussi de l’arrêter.
 
 Les comportements s’inspirent de https://heritagedepoudlard.fr/, avec une implémentation Three.js originale. Aucun code, modèle ou visuel de ce site ni des films n’a été repris.
 
